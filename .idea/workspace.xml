@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="178e424d-ccf2-4a39-8d47-2a7c4e05aea5" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Flask Main" />
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1aIzqYqQTMF7EcBTkadyfxwIDLU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\17560\PycharmProjects\fangyi\templates\student" />
+      <recent name="C:\Users\17560\PycharmProjects\fangyi\templates\team" />
+      <recent name="C:\Users\17560\PycharmProjects\fangyi\static" />
+      <recent name="C:\Users\17560\PycharmProjects\fangyi\static\css" />
+      <recent name="C:\Users\17560\PycharmProjects\fangyi\static\js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\17560\PycharmProjects\fangyi" />
+      <recent name="C:\Users\17560\PycharmProjects\fangyi\static" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Flask server.Flask (app.py)">
+    <configuration name="index.html (1)" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/fangyi/templates/student/index.html">
+      <method v="2" />
+    </configuration>
+    <configuration name="1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="fangyi" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apps/manage" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/apps/manage/1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="fangyi" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apps/manage" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/apps/manage/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask (app.py) (1)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <module name="fangyi" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <option name="flaskDebug" value="true" />
+      <module name="fangyi" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <option name="flaskDebug" value="true" />
+      <module name="fangyi" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <option name="flaskDebug" value="true" />
+      <module name="fangyi" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <option name="flaskDebug" value="true" />
+      <module name="fangyi" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <option name="flaskDebug" value="true" />
+      <module name="fangyi" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="yunyikong" type="Python.FlaskServer">
+      <option name="flaskDebug" value="true" />
+      <module name="fangyi" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\Users\a\Virtualenv\flask-env\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Flask server.yunyikong" />
+      <item itemvalue="Flask server.Flask (app.py) (1)" />
+      <item itemvalue="Flask server.Flask (app.py)" />
+      <item itemvalue="JavaScript Debug.index.html (1)" />
+      <item itemvalue="Python.1" />
+      <item itemvalue="Python.test" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Flask server.Flask (app.py)" />
+        <item itemvalue="Flask server.Flask (app.py) (1)" />
+        <item itemvalue="JavaScript Debug.index.html (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="178e424d-ccf2-4a39-8d47-2a7c4e05aea5" name="Default Changelist" comment="" />
+      <created>1586438086223</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586438086223</updated>
+      <workItem from="1586438098829" duration="7316000" />
+      <workItem from="1586513359535" duration="11016000" />
+      <workItem from="1586576693520" duration="1755000" />
+      <workItem from="1586601720188" duration="17584000" />
+      <workItem from="1586657928374" duration="360000" />
+      <workItem from="1586665783341" duration="726000" />
+      <workItem from="1586666522738" duration="8536000" />
+      <workItem from="1586765846068" duration="233000" />
+      <workItem from="1586771387043" duration="7424000" />
+      <workItem from="1586857123509" duration="4857000" />
+      <workItem from="1586955142712" duration="7891000" />
+      <workItem from="1587041173907" duration="3784000" />
+      <workItem from="1587132468061" duration="7080000" />
+      <workItem from="1587178782806" duration="31247000" />
+      <workItem from="1587269206272" duration="22274000" />
+      <workItem from="1587469249803" duration="9000" />
+      <workItem from="1587471641864" duration="4273000" />
+      <workItem from="1587548411544" duration="13920000" />
+      <workItem from="1587630346550" duration="19633000" />
+      <workItem from="1587716264224" duration="6064000" />
+      <workItem from="1587722700949" duration="1571000" />
+      <workItem from="1587741799431" duration="642000" />
+      <workItem from="1587779970863" duration="20072000" />
+      <workItem from="1587820903262" duration="10594000" />
+      <workItem from="1587833417306" duration="15000" />
+      <workItem from="1587833483683" duration="24000" />
+      <workItem from="1587833653969" duration="83000" />
+      <workItem from="1587834039536" duration="33000" />
+      <workItem from="1587834227682" duration="3728000" />
+      <workItem from="1587888521615" duration="19000" />
+      <workItem from="1587889290068" duration="335000" />
+      <workItem from="1587889759064" duration="15000" />
+      <workItem from="1587890951436" duration="67000" />
+      <workItem from="1587901588604" duration="22000" />
+      <workItem from="1587901623592" duration="548000" />
+      <workItem from="1587902181718" duration="331000" />
+      <workItem from="1587902684151" duration="34000" />
+      <workItem from="1587902792082" duration="1003000" />
+      <workItem from="1587903811431" duration="582000" />
+      <workItem from="1587911189328" duration="21000" />
+      <workItem from="1587954733559" duration="16000" />
+      <workItem from="1587954925151" duration="11000" />
+      <workItem from="1587955011504" duration="21000" />
+      <workItem from="1587955173721" duration="42000" />
+      <workItem from="1587955247589" duration="10000" />
+      <workItem from="1587955291411" duration="1264000" />
+      <workItem from="1587975586091" duration="2335000" />
+      <workItem from="1587997029303" duration="119000" />
+      <workItem from="1587997156895" duration="5995000" />
+      <workItem from="1588044124486" duration="1266000" />
+      <workItem from="1588070397470" duration="44000" />
+      <workItem from="1588081365765" duration="10000" />
+      <workItem from="1588082089467" duration="170000" />
+      <workItem from="1588082301457" duration="534000" />
+      <workItem from="1588082912210" duration="690000" />
+      <workItem from="1588083668575" duration="579000" />
+      <workItem from="1588084339518" duration="114000" />
+      <workItem from="1588084486517" duration="1953000" />
+      <workItem from="1588126018004" duration="178000" />
+      <workItem from="1588127214768" duration="511000" />
+      <workItem from="1588138178721" duration="112000" />
+      <workItem from="1588138361442" duration="177000" />
+      <workItem from="1588138551902" duration="494000" />
+      <workItem from="1588139077011" duration="5486000" />
+      <workItem from="1588252948052" duration="241000" />
+      <workItem from="1588297826744" duration="1643000" />
+      <workItem from="1588301106330" duration="3934000" />
+      <workItem from="1588314578449" duration="1899000" />
+      <workItem from="1588317774301" duration="7229000" />
+      <workItem from="1588325816370" duration="53000" />
+      <workItem from="1588325890143" duration="61000" />
+      <workItem from="1588325986290" duration="152000" />
+      <workItem from="1588326184343" duration="2484000" />
+      <workItem from="1588344180299" duration="1275000" />
+      <workItem from="1588345489323" duration="10000" />
+      <workItem from="1588345511641" duration="156000" />
+      <workItem from="1588345676521" duration="134000" />
+      <workItem from="1588345817822" duration="3453000" />
+      <workItem from="1588349327654" duration="66000" />
+      <workItem from="1588349425357" duration="335000" />
+      <workItem from="1588349776400" duration="23000" />
+      <workItem from="1588349812148" duration="40000" />
+      <workItem from="1588349861079" duration="347000" />
+      <workItem from="1588350234877" duration="9000" />
+      <workItem from="1588350299581" duration="690000" />
+      <workItem from="1588383353567" duration="22000" />
+      <workItem from="1588383675155" duration="1097000" />
+      <workItem from="1588396860612" duration="5322000" />
+      <workItem from="1588428161506" duration="381000" />
+      <workItem from="1588428897461" duration="4113000" />
+      <workItem from="1588435433118" duration="383000" />
+      <workItem from="1588435834494" duration="167000" />
+      <workItem from="1588470342309" duration="2252000" />
+      <workItem from="1588489669412" duration="24000" />
+      <workItem from="1588489773809" duration="316000" />
+      <workItem from="1588494260514" duration="1971000" />
+      <workItem from="1588496361532" duration="16000" />
+      <workItem from="1588496627065" duration="12000" />
+      <workItem from="1588496698836" duration="7000" />
+      <workItem from="1588504954937" duration="1310000" />
+      <workItem from="1588514756939" duration="9000" />
+      <workItem from="1588556146904" duration="10477000" />
+      <workItem from="1588575618829" duration="4127000" />
+      <workItem from="1588590114240" duration="192000" />
+      <workItem from="1588597077004" duration="544000" />
+      <workItem from="1588642846589" duration="66000" />
+      <workItem from="1588643517481" duration="6923000" />
+      <workItem from="1588685616590" duration="21874000" />
+      <workItem from="1588725300885" duration="2912000" />
+      <workItem from="1588728240755" duration="3609000" />
+      <workItem from="1588731876256" duration="2393000" />
+      <workItem from="1588734285954" duration="6625000" />
+      <workItem from="1588740937830" duration="4796000" />
+      <workItem from="1588746870606" duration="302000" />
+      <workItem from="1588747700613" duration="3262000" />
+      <workItem from="1588773304629" duration="5366000" />
+      <workItem from="1588823732574" duration="420000" />
+      <workItem from="1588841181218" duration="676000" />
+      <workItem from="1588841901784" duration="3780000" />
+      <workItem from="1588845701012" duration="6000" />
+      <workItem from="1588863174116" duration="3076000" />
+      <workItem from="1588866308457" duration="557000" />
+      <workItem from="1588866899724" duration="7939000" />
+      <workItem from="1588915860132" duration="14521000" />
+      <workItem from="1588950694888" duration="4616000" />
+      <workItem from="1588955981350" duration="829000" />
+      <workItem from="1589010755936" duration="20849000" />
+      <workItem from="1589101699929" duration="94000" />
+      <workItem from="1589102111203" duration="858000" />
+      <workItem from="1589103231712" duration="4159000" />
+      <workItem from="1589107764345" duration="4912000" />
+      <workItem from="1589160807352" duration="9000" />
+      <workItem from="1589160817511" duration="48095000" />
+      <workItem from="1589331451641" duration="4540000" />
+      <workItem from="1589336351641" duration="17382000" />
+      <workItem from="1589361647701" duration="29000" />
+      <workItem from="1589362461516" duration="13611000" />
+      <workItem from="1589382709685" duration="320000" />
+      <workItem from="1589418975511" duration="9071000" />
+      <workItem from="1589428901322" duration="726000" />
+      <workItem from="1589600265315" duration="168000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="477" y="54" key="#Flask_(app.py)" timestamp="1588863230916">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="477" y="54" key="#Flask_(app.py)/0.0.1536.864@0.0.1536.864" timestamp="1588863230916" />
+    <state x="223" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1589103249729">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="223" y="68" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1588738925148" />
+    <state x="223" y="71" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1589103249729" />
+    <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1589331503301">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1589331503301" />
+    <state x="549" y="176" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1588917838077" />
+    <state width="1493" height="224" key="GridCell.Tab.0.bottom" timestamp="1589600434077">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="224" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1589600434077" />
+    <state width="1493" height="56" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1589124717737" />
+    <state width="1493" height="224" key="GridCell.Tab.0.center" timestamp="1589600434077">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="224" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1589600434077" />
+    <state width="1493" height="56" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1589124717737" />
+    <state width="1493" height="224" key="GridCell.Tab.0.left" timestamp="1589600434076">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="224" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1589600434076" />
+    <state width="1493" height="56" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1589124717736" />
+    <state width="1493" height="224" key="GridCell.Tab.0.right" timestamp="1589600434077">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="224" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1589600434077" />
+    <state width="1493" height="56" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1589124717737" />
+    <state width="1493" height="253" key="GridCell.Tab.1.bottom" timestamp="1588952506328">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="253" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588952506328" />
+    <state width="1493" height="253" key="GridCell.Tab.1.center" timestamp="1588952506328">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="253" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1588952506328" />
+    <state width="1493" height="253" key="GridCell.Tab.1.left" timestamp="1588952506328">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="253" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1588952506328" />
+    <state width="1493" height="253" key="GridCell.Tab.1.right" timestamp="1588952506328">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="253" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1588952506328" />
+    <state width="1493" height="178" key="GridCell.Tab.2.bottom" timestamp="1588901503088">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="178" key="GridCell.Tab.2.bottom/0.0.1536.864@0.0.1536.864" timestamp="1588901503088" />
+    <state width="1493" height="178" key="GridCell.Tab.2.center" timestamp="1588901503088">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="178" key="GridCell.Tab.2.center/0.0.1536.864@0.0.1536.864" timestamp="1588901503088" />
+    <state width="1493" height="178" key="GridCell.Tab.2.left" timestamp="1588901503088">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="178" key="GridCell.Tab.2.left/0.0.1536.864@0.0.1536.864" timestamp="1588901503088" />
+    <state width="1493" height="178" key="GridCell.Tab.2.right" timestamp="1588901503088">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1493" height="178" key="GridCell.Tab.2.right/0.0.1536.864@0.0.1536.864" timestamp="1588901503088" />
+    <state x="270" y="55" key="SettingsEditor" timestamp="1589365111120">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="270" y="55" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1589365111120" />
+    <state x="270" y="58" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1589102180977" />
+    <state x="449" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1589600265367">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1589600265367" />
+    <state x="449" y="249" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1588956012339" />
+    <state x="372" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1587904058890">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="372" y="23" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824@0.0.1536.824" timestamp="1587904058890" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1588707219004">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1588707219004" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/yunyikong2$Flask__app_py___1_.coverage" NAME="Flask (app.py) (1) Coverage Results" MODIFIED="1589107638632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/yunyikong$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1588956019796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/fangyi$test.coverage" NAME="test Coverage Results" MODIFIED="1587716271029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/manage" />
+    <SUITE FILE_PATH="coverage/fangyi$1.coverage" NAME="1 Coverage Results" MODIFIED="1587184199760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/manage" />
+    <SUITE FILE_PATH="coverage/fangyi$Flask__app_py___1_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1587721644139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/fangyi$fangyi.coverage" NAME="fangyi Coverage Results" MODIFIED="1588905334556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/yunyikong2$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1589600270174" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/fangyi$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1588905968525" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>

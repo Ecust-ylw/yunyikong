@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>个人信息</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/vue.js') }}"></script>
+    <style>
+        .box {
+            padding-top: 20px;
+        }
+
+    </style>
+
+    <style type="text/css">
+        h1{
+            font-size:30px;
+            color:#930;
+            text-align:center;
+        }
+        ._form-control {
+
+            /* width: 100%; */
+            height: 34px;
+            width: 68%;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+    </style>
+
+<script>
+    function clickModify(e) {
+        let id = e.id.split('-')[0]
+        let eid = e.id.split('-')[2]
+        document.getElementById(id+'-input-'+eid).style.display="inline";
+        document.getElementById(id+'-p-'+eid).style.display="none";
+        document.getElementById(id+'-modify-'+eid).style.display="none";
+        document.getElementById(id+'-sure-'+eid).style.display="inline";
+        document.getElementById(id+'-cancel-'+eid).style.display="inline";
+    }
+    function clickSure(e) {
+        let id = e.id.split('-')[0]
+        let eid = e.id.split('-')[2]
+        document.getElementById(id+'-input-'+eid).style.display="none";
+        document.getElementById(id+'-p-'+eid).style.display="inline";
+        document.getElementById(id+'-modify-'+eid).style.display="inline";
+        document.getElementById(id+'-sure-'+eid).style.display="none";
+        document.getElementById(id+'-cancel-'+eid).style.display="none";
+
+        let content = document.getElementById(id+'-input-'+eid).value;
+        document.getElementById(id+'-p-'+eid).innerText = content;
+
+
+
+        $.ajax({
+            'url': '/equipment/edit/'+eid,    //请求的url地址
+            'dataType':"json",   //返回格式为json
+            'data':{
+                "key":id,//属性名
+                'value': content//修改内容
+            },    //参数值,键值对
+            'type':"post",   //请求方式
+            success:function(data){
+                //请求成功时处理
+                if(data['msg'] == 'success'){
+                    alert('修改成功')}
+                else {
+                    if(data['data']== 'fail'){
+                         alert('修改失败')
+                        window.location.href = '/equipment/show'
+                    }
+                }
+            },
+            complete:function(){
+                //请求完成的处理
+            },
+            error:function(){
+                //请求出错处理
+                alert('请检查网络...')
+            }
+        });
+    }
+    function clickCancel(e) {
+        let id = e.id.split('-')[0]
+        let eid = e.id.split('-')[2]
+        document.getElementById(id+'-input-'+eid).style.display="none";
+        document.getElementById(id+'-p-'+eid).style.display="inline";
+        document.getElementById(id+'-modify-'+eid).style.display="inline";
+        document.getElementById(id+'-sure-'+eid).style.display="none";
+        document.getElementById(id+'-cancel-'+eid).style.display="none";
+
+        let content = document.getElementById(id+'-p-'+eid).innerText;
+        document.getElementById(id+'-input-'+eid).value = content;
+    }
+</script>
+</head>
+
+<body>
+<!--nav-->
+<nav class="nav nav-tabs navbar-inverse navbar-fixed-top" style="color: white ">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">云疫平台--管理端</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('index.index_page') }}">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="{{ url_for('equipment.equipment_show') }}">设备管理 <span class="sr-only">(current)</span></a></li>
+                <li><a href="{{ url_for('monitor.person_status') }}">人员管理 <span class="sr-only">(current)</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}({{ user.username }}) <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user.edit_information') }}">个人信息</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url_for('user.logout') }}">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--contain-->
+    <div>
+        <h1 style="margin-top: 110px">设备信息</h1>
+
+        <form method="post" style="margin-left: 30%;margin-right: 30%" action="#">
+            <div class="col col-md-3"><label for="status-input" class=" form-control-label">状态：</label></div>
+                <div class="col-6 col-md-7">
+                    <input type="text" id="status-input-{{ equipment.id }}" name="name" style='display: none' value="{{ equipment.status }}" class="form-control">
+                    <p class="form-control-static" id='status-p-{{ equipment.id }}' style='display: block'>{{ equipment.status }}</p>
+                </div>
+            <div class='col-4 col-md-2'>
+                <button id='status-modify-{{ equipment.id }}' type="button" onclick='clickModify(this)' class="btn btn-link" style="color:gray">修改</button>
+                <button id='status-sure-{{ equipment.id }}' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-outline-primary">确定</button>
+                <button id='status-cancel-{{ equipment.id }}' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-outline-danger">取消</button>
+            </div>
+            <div class="col col-md-3"><label for="admin_id-input" class=" form-control-label">管理员id：</label></div>
+                <div class="col-6 col-md-7">
+                    <input type="text" id="admin_id-input-{{ equipment.id }}" name="name" style='display: none' value="{{ equipment.admin_id }}" class="form-control">
+                    <p class="form-control-static" id='admin_id-p-{{ equipment.id }}' style='display: block'>{{ equipment.admin_id }}</p>
+                </div>
+            <div class='col-4 col-md-2'>
+                <button id='admin_id-modify-{{ equipment.id }}' type="button" onclick='clickModify(this)' class="btn btn-link" style="color:gray">修改</button>
+                <button id='admin_id-sure-{{ equipment.id }}' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-outline-primary">确定</button>
+                <button id='admin_id-cancel-{{ equipment.id }}' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-outline-danger">取消</button>
+            </div>
+            <div class="col col-md-3"><label for="location-input" class=" form-control-label">地点：</label></div>
+                <div class="col-6 col-md-7">
+                    <input type="text" id="location-input-{{ equipment.id }}" name="name" style='display: none' value="{{ equipment.location }}" class="form-control">
+                    <p class="form-control-static" id='location-p-{{ equipment.id }}' style='display: block'>{{ equipment.location }}</p>
+                </div>
+            <div class='col-4 col-md-2'>
+                <button id='location-modify-{{ equipment.id }}' type="button" onclick='clickModify(this)' class="btn btn-link" style="color:gray">修改</button>
+                <button id='location-sure-{{ equipment.id }}' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-outline-primary">确定</button>
+                <button id='location-cancel-{{ equipment.id }}' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-outline-danger">取消</button>
+            </div>
+            <div class="col col-md-3"><label for="longitude-input" class=" form-control-label">经度：</label></div>
+                <div class="col-6 col-md-7">
+                    <input type="text" id="gaode_longitude-input-{{ equipment.id }}" name="name" style='display: none' value="{{ equipment.gaode_longitude }}" class="form-control">
+                    <p class="form-control-static" id='gaode_longitude-p-{{ equipment.id }}' style='display: block'>{{ equipment.gaode_longitude }}</p>
+                </div>
+            <div class='col-4 col-md-2'>
+                <button id='gaode_longitude-modify-{{ equipment.id }}' type="button" onclick='clickModify(this)' class="btn btn-link" style="color:gray">修改</button>
+                <button id='gaode_longitude-sure-{{ equipment.id }}' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-outline-primary">确定</button>
+                <button id='gaode_longitude-cancel-{{ equipment.id }}' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-outline-danger">取消</button>
+            </div>
+            <div class="col col-md-3"><label for="gaode_latitude-input" class=" form-control-label">纬度：</label></div>
+                <div class="col-6 col-md-7">
+                    <input type="text" id="gaode_latitude-input-{{ equipment.id }}" name="name" style='display: none' value="{{ equipment.gaode_latitude }}" class="form-control">
+                    <p class="form-control-static" id='gaode_latitude-p-{{ equipment.id }}' style='display: block'>{{ equipment.gaode_latitude }}</p>
+                </div>
+            <div class='col-4 col-md-2'>
+                <button id='gaode_latitude-modify-{{ equipment.id }}' type="button" onclick='clickModify(this)' class="btn btn-link" style="color:gray">修改</button>
+                <button id='gaode_latitude-sure-{{ equipment.id }}' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-outline-primary">确定</button>
+                <button id='gaode_latitude-cancel-{{ equipment.id }}' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-outline-danger">取消</button>
+            </div>
+
+
+
+
+
+        </form>
+    </div>
+
+<!--footer-->
+<footer style="background: black;height: 50px" class="navbar-fixed-bottom">
+</footer>
+
+</body>
+</html>

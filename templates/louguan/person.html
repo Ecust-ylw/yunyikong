@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" href="{{ url_for('static',filename='css/common.css') }}" rel="stylesheet" charset="UTF-8">
+    <title>人员状态</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="../../static/css/font-awesome-4.7.0/css/font-awesome.css">
+    <style>
+        .modal-backdrop{
+            z-index:0;
+        }
+        .container{
+            width: 100%;
+            padding: 0;
+        }
+    </style>
+    <style>
+        .hide{
+            display: none;
+        }
+        .c1{
+            position: fixed;
+            top:0;
+            bottom: 0;
+            left:0;
+            right: 0;
+            background: rgba(0,0,0,.5);
+            z-index: 2;
+        }
+        .c2{
+            background-color: white;
+            position: fixed;
+            width: 400px;
+            height: 500px;
+            top:50%;
+            left: 50%;
+            z-index: 3;
+            margin-top: -200px;
+            margin-left: -200px;
+        }
+        #modal1{
+            height: 170px;
+        }
+        #modal2{
+            height: 300px;
+        }
+		#modal1 p {
+			margin-left:80px;
+            margin-top: 10px;
+		}
+        #modal2 p {
+			margin-left:80px;
+            margin-top: 10px;
+		}
+    </style>
+    <style type="text/css">
+        table {
+          border: 1px;
+          border-collapse: collapse;
+        }
+        td {
+          font: normal 12px/17px Arial;
+          padding: 2px;
+          width: 250px;
+            height: 50px;
+
+        }
+        th {
+          font: bold 12px/17px Arial;
+          text-align: left;
+          padding: 4px;
+          border-bottom: 1px solid #333;
+          width: 250px;
+            border:1px solid black;
+            border-color: #5a6268;
+            height: 35px;
+        }
+        .parent {
+          background: #bdeeec;
+          cursor: pointer;
+        }
+        .odd {
+          {#background-color: white;#}
+        }
+        .selected {
+          background: #eef5f4;
+          color: #131313;
+        }
+    </style>
+    <script>
+        ///删除所选学生的宿舍号
+        function del(e) {
+            let id = e.id
+
+            $.ajax({
+                'url': '/monitor/drop/'+id,
+                'data': {
+                },
+                'type' :'get',
+                'dataType':'json',
+                'success': function (data) {
+                    if (data['msg'] == 'success') {
+                        alert('删除成功')
+                        window.location.href = '/monitor/person_status'
+                    } else {
+                        console.log(data)
+                        var error = data['error']
+                        alert(error)
+                    }
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+
+        }
+        ///点击修改按钮，给后台发送学生的id，后台返回学生数据，给弹窗赋值
+        function edit(e) {
+            let id = e.id
+
+            $.ajax({
+                'url': '/monitor/edit/'+id,
+                'data': {
+                },
+                'type' :'get',
+                'dataType':'json',
+                'success': function (data) {
+                    console.log(data)
+                    document.getElementById('shade').classList.remove('hide');
+                    document.getElementById('modal1').classList.remove('hide');
+                    document.getElementById('dormitory').value=data.dormitory
+                    document.getElementById('sid').value=data.id
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+        }
+
+        ///修改学生信息
+        function submit1() {
+            var dormitory = $("input[name='dormitory']").val();
+            var sid = $("input[name='sid']").val();
+
+            $.ajax({
+                'url': '/monitor/edit/'+sid,
+                'data': {
+                    'dormitory': dormitory,
+                },
+                'type' :'post',
+                'dataType':'json',
+                'success': function (data) {
+                    if (data['msg'] == 'success') {
+                        alert('修改成功')
+                        //document.getElementById('shade').classList.add('hide');
+                        //document.getElementById('modal1').classList.add('hide');
+                        window.location.href = '/monitor/person_status'
+                    } else {
+                        console.log(data)
+                        var error = data['error']
+                        alert(error)
+                    }
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+
+        }
+        //点击`添加人员`后弹窗
+        function add() {
+            document.getElementById('shade').classList.remove('hide');
+            document.getElementById('modal2').classList.remove('hide');
+        }
+        //添加学生
+        function submit2() {
+            var name = $('input[name="name1"]').val();
+            var dormitory = $("input[name='dormitory1']").val();
+            var username = $("input[name='username1']").val();
+
+            $.ajax({
+                'url': '/monitor/add_student',
+                'data': {
+                    'name': name,
+                    'dormitory': dormitory,
+                    'username': username,
+
+                },
+                'type' :'post',
+                'dataType':'json',
+                'success': function (data) {
+                    if (data['msg'] == 'success') {
+                        alert('添加成功')
+                        //document.getElementById('shade').classList.add('hide');
+                        //document.getElementById('modal1').classList.add('hide');
+                        window.location.href = '/monitor/person_status'
+                    } else {
+                        console.log(data)
+                        var error = data['error']
+                        alert(error)
+                    }
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+        }
+            //第一个弹窗的关闭
+        function Hide1(){
+        document.getElementById('shade').classList.add('hide');
+        document.getElementById('modal1').classList.add('hide');
+        }
+        //第二个弹窗的关闭
+        function Hide2(){
+        document.getElementById('shade').classList.add('hide');
+        document.getElementById('modal2').classList.add('hide');
+        }
+    </script>
+    <script type="text/javascript">
+        //要实现各行变色效果，添加以下jQuery代码:
+        $(function () {
+            $("tbody>tr:odd").addClass("odd");//将表体的奇数行添加样式
+            $("tbody>tr:even").addClass("even");//将表体的偶数行添加样式
+            //选中的行实现高亮效果则添加如下代码
+            $("tbody>tr").mouseover(function () {
+                $(this).addClass("selected");
+            }).mouseout(function () {
+                $(this).removeClass("selected");
+            });
+            //表格的展开和收缩实现代码
+            $("tr.parent").click(function () {  //获取所谓的父行
+                var $a = $("<strong>+</strong>");
+                var $b = $("<strong>-</strong>");
+                //添加/删除高亮效果             //  隐藏/显示所谓的子行
+                $(this).toggleClass("selected").siblings(".child_" + this.id).toggle();
+               //想让表格一加载就折叠，需要加上click事件触发就行了
+            }).click();
+        });
+    </script>
+</head>
+<body>
+    <!--nav-->
+    <nav class="nav nav-tabs navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">云疫平台--管理端</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('index.index_page') }}">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#component"></a></li>
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">人员管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('monitor.person_status') }}">人员状态</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a onclick="temperature()">报警记录</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="btn-group">
+                    <a title="消息" class="fa fa-bell" data-toggle="dropdown">
+                        <label class="label label-danger" style="right: 0px">{{ count }}</label>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        {% for alarm in alarms %}
+                            <li><a href="{{ url_for('date.look_temperature',uid=alarm.user.id,time= alarm.create_time) }}" >{{ alarm.user.name }}---{{ alarm.temperature }}-----{{ alarm.create_time }}</a></li>
+
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}({{ user.username }}) <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user.edit_information') }}">个人信息</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url_for('user.logout') }}">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+    <div class="container" style="padding-bottom: 40px;background: aliceblue" id="alert">
+        <div class="container" style="margin-top: 30px; background: aliceblue; width: 90%;">
+            <table class="table table-bordered table-hover table-striped">
+                <caption class="h2 text-center">人员状态</caption>
+                <button class="btn btn-success" style="float: right;margin-right: 10%;margin-top: 2%" onclick="add()">添加学生 </button>
+                <thead>
+                <tr class="success">
+                    <th class="text-info text-center">序号</th>
+                    <th class="text-success text-center">姓名</th>
+                    <th class="text-danger text-center">宿舍</th>
+                    <th class="text-warning text-center">联系方式</th>
+                    <th class="text-primary text-center">状态</th>
+                    <th class="text-success text-center">体温（℃）</th>
+                    <th class="text-danger text-center">班级</th>
+                    <th class="text-warning text-center">学院</th>
+                    <th class="text-primary text-center">学号</th>
+                    <th class="text-success text-center">详情</th>
+                    <th class="text-warning text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dormitory in dormitorys %}
+                <tr class="parent info" id={{ dormitory[0].dormitory }}>
+                    <th colspan="11">{{ dormitory[0].dormitory }}</th>
+                </tr>
+                {% for student in dormitory %}
+                <tr class='child_{{ student.dormitory }} warning text-center' >
+                    <th >{{loop.index}}</th>
+                    <th >{{student.name}}</th>
+                    <th >{{student.dormitory}}</th>
+                    <th >{{student.telephone}}</th>
+                    <th >{{student.status}}</th>
+                    <th >{{student.temperature}}</th>
+                    <th >{{student.class}}</th>
+                    <th >{{student.college}}</th>
+                    <th >{{student.username}}</th>
+                    <th >
+                        <div style="text-align: center">
+                            <a  class="btn btn-success btn-sm" href="{{ url_for('date.look_temperature',uid = student.id,time=student.time) }}">查看</a>
+                        </div>
+                    </th>
+                    <th>
+                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#layer" id="{{ student.id }}" onclick="edit(this)">修改</button>
+                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#delete{{ student.id }}">删除</button>
+                    </th>
+                </tr>
+                    <div class="modal fade" role="dialog" id="delete{{ student.id }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 60%">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                                <h4 class="modal-title">是否删除？</h4>
+                            </div>
+                            <div class="modal-body text-right">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="del(this)" id="{{ student.id }}">确认</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="shade" class="c1 hide"></div>
+{#    <div id="modal1" class="c2 hide" >#}
+{#        <p>宿舍：<input type="text" id="dormitory" name="dormitory"></p>#}
+{#        <p><input type="hidden" id="sid" name="sid"></p>#}
+{#        <p style="margin-left: 40%">#}
+{#            <input type="button" value="确定" onclick="submit1()" class="btn btn-success">#}
+{#            <input type="button" value="取消" onclick="Hide1();" class="btn btn-primary">#}
+{#        </p>#}
+{#    </div>#}
+    <div id="modal1" class="c2 hide" >
+        <h3 style="text-align: center">修改宿舍</h3>
+        <div style="width: 90%;margin-right: 5%">
+            <div class="form-group" style="margin-top: 20px">
+                    <label for="dormitory" class="col-sm-3 control-label">宿舍：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="dormitory" name="dormitory" class="form-control">
+                    </div>
+            </div>
+            <br>
+            <br>
+        </div>
+        <p><input type="hidden" id="sid" name="sid"></p>
+        <p style="margin-left: 40%">
+            <input type="button" value="确定" onclick="submit1()" class="btn btn-success">
+            <input type="button" value="取消" onclick="Hide1();" class="btn btn-primary">
+        </p>
+    </div>
+    <div id="modal2" class="c2 hide" >
+        <form>
+            <h3 style="text-align: center">添加人员</h3>
+            <div style="width: 90%;margin-right: 5%">
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="name1" class="col-sm-3 control-label">用户：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="name1" name="name1" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="username1" class="col-sm-3 control-label">学号：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="username1" name="username1" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="dormitory1" class="col-sm-3 control-label">宿舍：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="dormitory1" name="dormitory1" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+
+            <p style="margin-left: 40%;margin-top: 20px;float: right;margin-right: 10%" >
+                <input type="button" value="确定" onclick="submit2()" class="btn btn-success">
+                <input type="button" value="取消" onclick="Hide2();" class="btn btn-primary">
+            </p>
+        </form>
+
+    </div>
+    <!--footer-->
+    <footer style="background: black;height: 50px" class="navbar-fixed-bottom">
+</footer>
+<script>
+    function temperature() {
+        var now = new Date();
+
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var time=year+'-'+month+'-'+day+' '+'00:00:00'
+        window.location.href = '/monitor/alarm_records/'+time
+
+    }
+    </script>
+</body>
+</html>

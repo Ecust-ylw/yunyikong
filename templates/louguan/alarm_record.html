@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" href="{{ url_for('static',filename='css/common.css') }}" rel="stylesheet" charset="UTF-8">
+    <title>报警记录</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="../../static/css/font-awesome-4.7.0/css/font-awesome.css">
+
+    <style>
+        .modal-backdrop{
+            z-index:0;
+        }
+        .container{
+            width: 100%;
+            padding: 0;
+        }
+    </style>
+
+</head>
+<body style="background: #fcf8e3">
+<!--nav-->
+<nav class="nav nav-tabs navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">云疫平台--管理端</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('index.index_page') }}">首页 <span class="sr-only">(current)</span></a></li>
+                {#                <li><a href="{{ url_for('monitor.person_status') }}">人员状态 <span class="sr-only">(current)</span></a></li>#}
+                {#                <li><a href="{{ url_for('monitor.user_alarm_records') }}">报警记录 <span class="sr-only">(current)</span></a></li>#}
+                <li><a href="#component"></a></li>
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">人员管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('monitor.person_status') }}">人员状态</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a onclick="temperature()">报警记录</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="btn-group">
+                    <a title="消息" class="fa fa-bell" data-toggle="dropdown">
+                        <label class="label label-danger" style="right: 0px">{{ count }}</label>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        {% for alarm in alarms1 %}
+                            <li><a href="{{ url_for('date.look_temperature',uid=alarm.user.id,time= alarm.create_time) }}" >{{ alarm.user.name }}---{{ alarm.temperature }}-----{{ alarm.create_time }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}({{ user.username }}) <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user.edit_information') }}">个人信息</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url_for('user.logout') }}">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--人员状态-->
+<div style="margin-top: 110px;width:1500px;margin-left: 200px">
+        <div style="float:left;margin-top: -10px;width: 1px;height: 40px; background: darkgray;"></div>
+        <div class="col-md-2" style="width: 200px;margin-top: -10px">
+            <h4 id="find_time">{{ time }}</h4>
+        </div>
+        <div style="float:left;margin-top: -10px;width: 1px;height: 40px; background: darkgray;"></div>
+        <div class="col-md-2" style="width: 200px">
+            <span>地点</span>
+            <span style="border: 1px solid;padding: 6px">{{ location }}</span>
+        </div>
+        <div style="float:left;margin-top: -10px;width: 1px;height: 40px; background: darkgray;"></div>
+        <div class="col-md-2" style="width: 200px">
+            <span>总测温人数</span>
+            <span style="border: 1px solid;padding: 6px">{{ pass_num }}</span>
+            <span>人</span>
+        </div>
+        <div style="float:left;margin-top: -10px;width: 1px;height: 40px; background: darkgray;"></div>
+        <div class="col-md-2" style="width: 200px">
+            <span>体温异常人数</span>
+            <span style="border: 1px solid;padding: 6px">{{ today_num }}</span>
+        </div>
+        <div style="float:left;margin-top: -10px;width: 1px;height: 40px; background: darkgray;"></div>
+        <div class="col-md-2" style="text-align: center;margin-right: 0px;margin-top: -5px">
+            <li class="dropdown" style="border: 1px solid;padding: 6px;width: 180px;list-style: none">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">选择查看日期 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                     {% for twoweek in twoweeks %}
+                    <li><a href="{{ url_for('monitor.user_alarm_records',time=twoweek+' 00:00:00') }}">{{twoweek}}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </div>
+        <div style="float:left;margin-top: -10px;width: 1px;height: 40px; background: darkgray;"></div>
+    </div>
+</div>
+    <!--视频-->
+    <div style="margin-left: 10%;width: 80%;margin-top: 70px">
+        <div class="col-md-8"style="margin-top: 40px">
+            <iframe src="../../static/image/楼管、admin端视频展示.mp4" style="height: 300px;width: 80%"> </iframe>
+        </div>
+        <div class="col-md-3"style="margin-top: 40px">
+            <div>
+                <img src="../../static/image/抓图1.png" style="height: 90px;">
+            </div>
+            <div>
+                <img src="../../static/image/抓图1.png" style="height: 90px;margin-top: 10px">
+            </div>
+            <div>
+                <img src="../../static/image/抓图1.png" style="height: 90px;margin-top: 10px">
+            </div>
+        </div>
+    </div>
+
+    <!--报警记录-->
+    <div class="container" style="padding-bottom: 40px;background: #fcf8e3" id="alert">
+        <div class="container" style="margin-top: 30px; background: #fcf8e3; width: 90%;margin-bottom: 50px">
+            <table class="table table-bordered table-hover">
+                <caption class="h2 text-center">报警记录</caption>
+                <thead>
+                <tr class="text-info">
+                    <th class="text-center">序号</th>
+                    <th class="text-center">人员</th>
+                    <th class="text-center">宿舍</th>
+                    <th class="text-center">时间</th>
+                    <th class="text-center">温度（℃）</th>
+                    <th class="text-center">联系电话</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for alarm in alarms_unsure %}
+                <tr class="text-center" v-for="item in myData">
+                    <td>{{loop.index}}</td>
+                    <td>{{alarm.name}}</td>
+                    <td>{{alarm.dormitory}}</td>
+                    <td>{{alarm.alarm_time}}</td>
+                    <td>{{alarm.temperature}}</td>
+                    <td>{{alarm.telephone}}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#layer{{ alarm.id }}"   >确认</button>
+                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#delete{{ alarm.id }}">删除</button>
+                    </td>
+                </tr>
+                <div class="modal fade" role="dialog" id="layer{{ alarm.id }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 60%">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                                <h4 class="modal-title">是否确定？</h4>
+                            </div>
+                            <div class="modal-body text-right">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="confirm(this)" id="{{ alarm.id}}">确认</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" role="dialog" id="delete{{ alarm.id }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 60%">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                                <h4 class="modal-title">是否删除？</h4>
+                            </div>
+                            <div class="modal-body text-right">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="del(this)" id="{{ alarm.id }}">确认</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% for alarm in alarms_sure %}
+                <tr class="text-center" v-for="item in myData">
+                    <td>{{loop.index}}</td>
+                    <td>{{alarm.name}}</td>
+                    <td>{{alarm.dormitory}}</td>
+                    <td>{{alarm.alarm_time}}</td>
+                    <td>{{alarm.temperature}}</td>
+                    <td>{{alarm.telephone}}</td>
+                    <td>已确认</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>
+<!--footer-->
+<footer style="background: black;height: 50px" class="navbar-fixed-bottom">
+</footer>
+<script>
+    function temperature() {
+        var now = new Date();
+
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var time=year+'-'+month+'-'+day+' '+'00:00:00'
+        window.location.href = '/monitor/alarm_records/'+time
+
+    }
+    </script>
+
+<script>
+    {#通过获取当前页面的那个日期#}
+        var f_time1=document.getElementById("find_time").innerHTML;
+        var f_time=f_time1+' 00:00:00';
+        function confirm(e) {
+            let id = e.id
+            $.ajax({
+                'url': '/monitor/confirm/'+id,
+                'data': {
+                },
+                'type' :'get',
+                'dataType':'json',
+                'success': function (data) {
+                    if (data['msg'] == 'success') {
+                        alert('确认成功')
+                        window.location.href = '/monitor/alarm_records/'+f_time
+                    } else {
+                        console.log(data)
+                        alert('确认失败')
+                    }
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+
+        }
+        function del(e) {
+            let id = e.id
+            $.ajax({
+                'url': '/monitor/delete/'+id,
+                'data': {
+                },
+                'type' :'get',
+                'dataType':'json',
+                'success': function (data) {
+                    if (data['msg'] == 'success') {
+                        alert('删除成功')
+                        window.location.href = '/monitor/alarm_records/'+f_time
+                    } else {
+                        console.log(data)
+                        alert('删除失败')
+                    }
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

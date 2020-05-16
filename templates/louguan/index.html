@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link type="text/css" href="{{ url_for('static',filename='css/common.css') }}" rel="stylesheet" charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{#    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script scr="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>#}
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    <!-- <script src="js/china.js"></script> -->
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="../../static/css/font-awesome-4.7.0/css/font-awesome.css">
+
+     <style type="text/css">
+        table {
+          border: 1px;
+          border-collapse: collapse;
+        }
+        td {
+          font: normal 12px/17px Arial;
+          padding: 2px;
+          width: 250px;
+            height: 50px;
+
+        }
+        th {
+          font: bold 12px/17px Arial;
+          text-align: left;
+          padding: 4px;
+          border-bottom: 1px solid #333;
+          width: 250px;
+            border:1px solid black;
+            border-color: #5a6268;
+            height: 35px;
+        }
+        .parent {
+          background: #bdeeec;
+          cursor: pointer;
+        }
+        .odd {
+          {#background-color: white;#}
+        }
+        .selected {
+          background: #eef5f4;
+          color: #131313;
+        }
+</style>
+    <style>
+        .modal-backdrop{
+            z-index:0;
+        }
+        .container{
+            width: 100%;
+            padding: 0;
+        }
+    </style>
+    <style>
+        .ill_dynamic_01_01 ul{
+            list-style: none;
+        }
+        .ill_dynamic_01_01{
+            white-space:nowrap;
+        }
+        .ill_dynamic_01_01 li{
+            display:inline-block;
+            margin-left: 15%;
+        }
+        .ill_dynamic_01_01 li .num_increase{
+            font-size: 20px;
+        }
+        .num1{
+            color: #7f1000;
+            font-size: 60px;
+            font-weight: 1000;
+
+        }
+
+        .num2{
+            color: #f78207;
+            font-size: 60px;
+            font-weight: 1000;
+        }
+        .num3{
+            color: #e83f3c;
+            font-size: 60px;
+            font-weight: 1000;
+        }
+        .num4{
+            color: #e83f3c;
+            font-size: 40px;
+            font-weight: 1000;
+        }
+        .num5{
+            color: #5d7092;
+            font-size: 40px;
+            font-weight: 1000;
+
+        }
+        .num6{
+
+            font-size: 40px;
+            color: #28b7a3;
+            font-weight: 1000;
+        }
+
+        .quezhen{
+            color: ;
+
+        }
+    </style>
+    <style >
+        .vmap {
+            width: 1000px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .amap-icon img,
+        .amap-marker-content img{
+            width: 45px;
+            height: 45px;
+        }
+    </style>
+
+    <!-- 三级联动 end -->
+</head>
+<body>
+    <!--nav-->
+    <nav class="nav nav-tabs navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">云疫平台--管理端</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('index.index_page') }}">首页 <span class="sr-only">(current)</span></a></li>
+{#                <li ><a href="{{ url_for('monitor.person_status') }}">人员状态 <span class="sr-only">(current)</span></a></li>#}
+{#                <li ><a href="{{ url_for('monitor.user_alarm_records') }}">报警记录 <span class="sr-only">(current)</span></a></li>#}
+
+                <li><a href="#component"></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">人员管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('monitor.person_status') }}">人员状态</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a onclick="temperature()">报警记录</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="btn-group">
+                    <a title="消息" class="fa fa-bell" data-toggle="dropdown">
+                        <label class="label label-danger" style="right: 0px">{{count}}</label>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        {% for alarm in alarms %}
+                            <li><a href="{{ url_for('date.look_temperature',uid=alarm.user.id,time= alarm.create_time) }}" >{{ alarm.user.name }}---{{ alarm.temperature }}-----{{ alarm.create_time }}</a></li>
+
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}({{ user.username }}) <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user.edit_information') }}">个人信息</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url_for('user.logout') }}">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+    <!--组件-->
+    <div id="home">
+        <!--全校数据-->
+        <div class="container" style="padding-bottom: 40px;background: #fcf8e3" id="bar">
+            <h2 style="margin-top: 60px;margin-left: 20%">全校数据</h2>
+            <div class="container" style="margin-top: 30px; width: 90%;">
+                <div class="ill_dynamic_01_01" style="text-align: center">
+                    <ul>
+                        <li>
+                            <div class="num1">
+
+                                <div class="num_increase">
+                                    +0
+                                </div>
+                                <div class="num_20">{{ date.totle }}</div>
+                            </div>
+                            <div class="quezhen">
+                                累计
+                            </div>
+                        </li>
+                        <li>
+                            <div class="num2">
+                                <div class="num_increase">
+                                    +0
+                                </div>
+
+                                <div class="num_20">{{ date.today_totle}}</div>
+                            </div>
+                            <div class="quezhen">
+                                今日新增
+                            </div>
+                        </li>
+                        <li>
+                            <div class="num3">
+                                <div class="num_increase">
+                                    +0
+                                </div>
+                                <div class="num_20">{{ date.sus_total }}</div>
+                            </div>
+
+                            <div class="quezhen">
+                                疑似
+                            </div>
+                        </li>
+                    </ul>
+                </div><br>
+            </div>
+        </div>
+
+        <!--地图-->
+        <div class="container" style="padding-bottom: 40px;background: #f9f2f4" id="input">
+
+{#            <div class="container" style="margin-top: 30px;background: #ffffff; width: 1200px">#}
+                <div>
+                    <h3 style="text-align: center">中国地图</h3>
+                    <div id="main" style="width: 800px;height: 400px;padding-top: 50px;margin: 0 auto"></div>
+                    <h3 style="text-align: center">新增人数变化图</h3>
+                    <div id="chart2" style="width: 1000px;height:400px;padding-top: 20px;margin: 40px auto"></div>
+                    <h3 style="text-align: center">校园地图</h3>
+                    <div id="vmap" class="vmap" style="width: 800px;height: 400px;padding-top: 50px;margin: 40px auto" ></div>
+                </div>
+{#            </div>#}
+                <div style="width: 80%;margin-left: 10%">
+                <table class="table table-bordered table-hover table-striped" style="text-align: center;margin-top: 50px;margin-bottom: 50px">
+                    <thead>
+                    <tr class="success">
+                        <th class="text-center text-info">学院/班级</th>
+                        <th class="text-center text-warning">累计</th>
+                        <th class="text-center text-success">新增</th>
+                        <th class="text-center text-danger">疑似</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for college in colleges %}
+                    <tr class="parent info" id={{ college[0][0] }} >
+                        <td colspan="1">{{ college[0][0] }}</td>
+                        <td colspan="1">{{ college[0][1] }}</td>
+                        <td colspan="1">{{ college[0][2] }}</td>
+                        <td colspan="1">{{ college[0][3] }}</td>
+                    </tr>
+                    {% for classes in college[1:] %}
+                    <tr class='warning child_{{ classes[0] }}'>
+                        <td >{{classes[1]}}</td>
+                        <td >{{classes[2]}}</td>
+                        <td >{{classes[3]}}</td>
+                        <td >{{classes[4]}}</td>
+
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+        <!--表格-->
+    <!--footer-->
+    <footer style="background: black;height: 50px" class="navbar-fixed-bottom">
+</footer>
+    <script type="text/javascript">
+        //要实现各行变色效果，添加以下jQuery代码:
+        $(function () {
+            $("tbody>tr:odd").addClass("odd");//将表体的奇数行添加样式
+            $("tbody>tr:even").addClass("even");//将表体的偶数行添加样式
+            //选中的行实现高亮效果则添加如下代码
+            $("tbody>tr").mouseover(function () {
+                $(this).addClass("selected");
+            }).mouseout(function () {
+                $(this).removeClass("selected");
+            });
+            //表格的展开和收缩实现代码
+            $("tr.parent").click(function () {  //获取所谓的父行
+                var $a = $("<strong>+</strong>");
+                var $b = $("<strong>-</strong>");
+                //添加/删除高亮效果             //  隐藏/显示所谓的子行
+                $(this).toggleClass("selected").siblings(".child_" + this.id).toggle();
+               //想让表格一加载就折叠，需要加上click事件触发就行了
+            }).click();
+        });
+    </script>
+<script type="text/javascript">
+        {#var date={{ date.item }};#}
+        {#console.log(date);#}
+        {#var date={#}
+        {#    '1':50,#}
+        {#    '2':70,#}
+        {#    '3':80,#}
+        {#    '4':100}#}
+        {#var date=[45,67,89,101];#}
+        var date= {{date.province_counts}};
+
+        var dataList=[
+            {name:"南海诸岛",value:date[0]},
+            {name: '北京', value: date[1]},
+            {name: '天津', value: date[2]},
+            {name: '上海', value: date[3]},
+            {name: '重庆', value: date[4]},
+            {name: '河北', value: date[5]},
+            {name: '河南', value: date[6]},
+            {name: '云南', value: date[7]},
+            {name: '辽宁', value: date[8]},
+            {name: '黑龙江', value:date[9]},
+            {name: '湖南', value: date[10]},
+            {name: '安徽', value:date[11]},
+            {name: '山东', value: date[12]},
+            {name: '新疆', value: date[13]},
+            {name: '江苏', value: date[14]},
+            {name: '浙江', value: date[15]},
+            {name: '江西', value: date[16]},
+            {name: '湖北', value: date[17]},
+            {name: '广西', value: date[18]},
+            {name: '甘肃', value: date[19]},
+            {name: '山西', value: date[20]},
+            {name: '内蒙古', value: date[21]},
+            {name: '陕西', value: date[22]},
+            {name: '吉林', value: date[23]},
+            {name: '福建', value: date[24]},
+            {name: '贵州', value: date[25]},
+            {name: '广东', value: date[26]},
+            {name: '青海', value: date[27]},
+            {name: '西藏', value: date[28]},
+            {name: '四川', value: date[29]},
+            {name: '宁夏', value: date[30]},
+            {name: '海南', value: date[31]},
+            {name: '台湾', value: date[32]},
+            {name: '香港', value: date[33]},
+            {name: '澳门', value: date[34]}
+        ]
+        var myChart = echarts.init(document.getElementById('main'));
+        function randomValue() {
+            return Math.round(Math.random()*1000);
+        }
+        option = {
+            tooltip: {
+                    formatter:function(params,ticket, callback){
+                        return params.seriesName+'<br />'+params.name+'：'+params.value
+                    }//数据格式化
+                },
+            visualMap: {
+                min: 0,
+                max: 10,
+                left: 'left',
+                top: 'bottom',
+                text: ['高','低'],//取值范围的文字
+                inRange: {
+                    color: ['#ffffff', '#ff0000']//取值范围的颜色
+                },
+                show:true//图注
+            },
+            geo: {
+                map: 'china',
+                roam: false,//不开启缩放和平移
+                zoom:1.23,//视角缩放比例
+                label: {
+                    normal: {
+                        show: true,
+                        fontSize:'10',
+                        color: 'rgba(0,0,0,0.7)'
+                    }
+                },
+                itemStyle: {
+                    normal:{
+                        borderColor: 'rgba(0, 0, 0, 0.2)'
+                    },
+                    emphasis:{
+                        areaColor: '#F3B329',//鼠标选择区域颜色
+                        shadowOffsetX: 0,
+                        shadowOffsetY: 0,
+                        shadowBlur: 20,
+                        borderWidth: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            },
+            series : [
+                {
+                    name: '累计确诊',
+                    type: 'map',
+                    geoIndex: 0,
+                    data:dataList,
+                    series_line:{
+                        connctNulls:true
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
+        myChart.on('click', function (params) {
+            alert(params.name);
+        });
+
+      /*  setTimeout(function () {
+            myChart.setOption({
+                series : [
+                    {
+                        name: '信息量',
+                        type: 'map',
+                        geoIndex: 0,
+                        data:dataList
+                    }
+                ]
+            });
+        },1000)*/
+</script>
+<script type="text/javascript">
+    function getDay(day) {
+    var today = new Date();
+    var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+    today.setTime(targetday_milliseconds); //注意，这行是关键代码
+    var tYear = today.getFullYear();
+    var tMonth = today.getMonth();
+    var tDate = today.getDate();
+    tMonth = doHandleMonth(tMonth + 1);
+    tDate = doHandleMonth(tDate);
+    return   tMonth+ "/" + tDate;
+}
+function doHandleMonth(month) {
+    var m = month;
+    if (month.toString().length == 1) {
+        m = "0" + month;
+    }
+    return m;
+}
+    var twoWeeksDays =[];
+    var twoWeeksReportCounts = [2,3,4,5,4,3,1,2,5,0,7,8,4,3];
+    for(let i=14;i>0;i--){
+        twoWeeksDays.push(getDay(-i))
+    }
+
+
+    var myChart=echarts.init(document.getElementById('chart2'));
+        //指定图表的配置项和数/ /
+    var option={
+            //标题
+            title:{
+              text:'新增变化'
+            },
+            //工具箱
+            //保存图片
+            xAxis: [
+                {
+
+                    type: 'category',
+                    boundaryGap: false,
+                    minTickSize: [1, "day"],
+                    timeformat: "%m/%d",
+                    data:twoWeeksDays //横坐标
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    scale: true,
+                {#    axisLabel: {#}
+                {#        formatter: '{value} ' //纵坐标单位#}
+                {##}
+                {##}}
+            ],
+            series: [
+                {
+                    name: '最高气温',
+                    type: 'line',
+                    data: twoWeeksReportCounts,
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: '最大值'},
+                            {type: 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            {type: 'average', name: '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+
+        //使用刚刚指定的配置项和数据项显示图表
+    myChart.setOption(option);
+    </script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=d7a10b3c8c098972fca3e226b275fb15"></script>
+<script>
+            //  地图对象
+	var map = new AMap.Map('vmap',
+			{
+				// // 缩放度
+				zoom:12,
+                center: [112.720752,37.750125],
+			}
+	);
+
+    // 设备列表
+	var positions = [
+             {% for e in equipments %}
+            [
+                { 'lng': {{ e.longitude }},  // 经度
+                  'lnt': {{ e.latitude }},    // 维度
+                  'state': '{{ e.status }}',   // 状态，根据状态调图片
+                  'name':'{{ e.location }}',
+                  'alarm_num': {{ e.alarm_num }},
+                  'content':[],
+                }
+            ],
+            {% endfor %}
+        ]
+    // 标注列表
+    var markers = [];
+    var pictures =  {'正常':'/static/img/mapPoint/blue.png', '故障':'/static/img/mapPoint/yellow.png', '101':'/static/img/mapPoint/red.png'};  // 标点图片
+    var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -25)});
+    // 点击函数
+    function markerClick(e) {
+            infoWindow.setContent(e.target.content);
+            infoWindow.open(map, e.target.getPosition());
+        }
+    if (positions.length) {
+       for(var i=0; i < positions.length; i += 1){
+           var marker = new AMap.Marker({
+                      // 经纬度
+                  position:[positions[i][0]['lng'], positions[i][0]['lnt']],
+                  // 图片
+                  icon: pictures[positions[i][0]['state']],
+                  // 偏移量
+                  offset: new AMap.Pixel(-22.5,-45),
+                  // 设置是否可拖拽
+                  draggable: false,
+
+            });
+            //　将点标记的信息录入对象中
+            positions[i][0]['content'][0] = "<dt>设备地点: "+positions[i][0]['name']+"</dt>"
+            positions[i][0]['content'][1] = "<dt>今日人次: "+positions[i][0]['alarm_num']+"</dt>"
+            // 给点标记增加点击功能
+            //把每个点的信息赋给点的content属性
+            marker.content = positions[i][0]['content'][0]+positions[i][0]['content'][1]
+           //给点标记的点击事件绑定函数
+            marker.on('click', markerClick);
+
+            markers.push(marker);
+            positions[i].push(marker)
+
+        }
+
+        map.add(markers);
+
+    }
+
+    map.setFitView();
+    </script>
+<script>
+    function temperature() {
+        var now = new Date();
+
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var time=year+'-'+month+'-'+day+' '+'00:00:01'
+        window.location.href = '/monitor/alarm_records/'+time
+
+    }
+    </script>
+</body>
+</html>

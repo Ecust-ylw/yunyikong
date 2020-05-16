@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>个人信息</title>
+    <link type="text/css" href="{{ url_for('static',filename='css/common.css') }}" rel="stylesheet" charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="../../static/css/font-awesome-4.7.0/css/font-awesome.css">
+
+        <style>
+        .box {
+            padding-top: 20px;
+        }
+
+    </style>
+
+    <style type="text/css">
+        h1{
+            font-size:30px;
+            color:#930;
+            text-align:center;
+        }
+        ._form-control {
+
+            /* width: 100%; */
+            height: 34px;
+            width: 68%;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+    </style>
+    <style>
+        .modal-backdrop{
+            z-index:0;
+        }
+        .container{
+            width: 100%;
+            padding: 0;
+        }
+    </style>
+<script>
+    function clickModify(e) {
+        let id = e.id.split('-')[0]
+        document.getElementById(id+'-input').style.display="inline";
+        document.getElementById(id+'-p').style.display="none";
+        document.getElementById(id+'-modify').style.display="none";
+        document.getElementById(id+'-sure').style.display="inline";
+        document.getElementById(id+'-cancel').style.display="inline";
+    }
+    function clickSure(e) {
+        let id = e.id.split('-')[0]
+
+        document.getElementById(id+'-input').style.display="none";
+        document.getElementById(id+'-p').style.display="inline";
+        document.getElementById(id+'-modify').style.display="inline";
+        document.getElementById(id+'-sure').style.display="none";
+        document.getElementById(id+'-cancel').style.display="none";
+
+        let content = document.getElementById(id+'-input').value;
+        document.getElementById(id+'-p').innerText = content;
+
+
+
+        $.ajax({
+            'url': '/user/edit',    //请求的url地址
+            'dataType':"json",   //返回格式为json
+            'data':{
+                "key":id,
+                'value': content
+            },    //参数值,键值对
+            'type':"post",   //请求方式
+            success:function(data){
+                //请求成功时处理
+                if(data['msg'] == 'success'){
+                    alert('修改成功')}
+                else {
+                    if(data['data']== 'fail'){
+                         alert('修改失败')
+                    }
+                }
+            },
+            complete:function(){
+                //请求完成的处理
+            },
+            error:function(){
+                //请求出错处理
+                alert('请检查网络...')
+            }
+        });
+    }
+    function clickCancel(e) {
+        let id = e.id.split('-')[0]
+        document.getElementById(id+'-input').style.display="none";
+        document.getElementById(id+'-p').style.display="inline";
+        document.getElementById(id+'-modify').style.display="inline";
+        document.getElementById(id+'-sure').style.display="none";
+        document.getElementById(id+'-cancel').style.display="none";
+
+        let content = document.getElementById(id+'-p').innerText;
+        document.getElementById(id+'-input').value = content;
+    }
+</script>
+</head>
+
+<body>
+<!--nav-->
+<nav class="nav nav-tabs navbar-inverse navbar-fixed-top" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">云疫平台--学生端</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('index.index_page') }}">首页 <span class="sr-only">(current)</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li ><a onclick="temperature()">体温记录<span class="sr-only">(current)</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="btn-group">
+                <a title="消息" class="fa fa-bell" data-toggle="dropdown">
+                    <label class="label label-danger" style="right: 0px">{{count}}</label>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    {% for record in records %}
+                            <li><a href="#">请及时到{{ record[0] }}处进行检查</a></li>
+                            {% for r in record[1:] %}
+                            <li><a onclick="temperature()">{{ r.equipment.location }}---{{ r.temperature }}-----{{ r.create_time }}</a></li>
+                            {% endfor %}
+                    {% endfor %}
+                </ul>
+                </li>
+                {% if user.temperature <= '37.3' %}
+                <li>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-top: 10px">点击查看体温状况</button>
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="myModal" tabindex="2041" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">发热情况</h4>
+                                </div>
+                                <div class="modal-body">您的体温是：{{ user.temperature }}（℃）</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                </li>
+                {% else %}
+                <li>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" style="margin-top: 10px">点击查看体温状况</button>
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="myModal" tabindex="2041" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">发热情况</h4>
+                                </div>
+                                <div class="modal-body">您的体温是：{{ user.temperature }}（℃）</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                </li>
+                {% endif %}
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}({{ user.username }})<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user.edit_information') }}">个人信息</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url_for('user.logout') }}">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--contain-->
+    <div>
+    <h1 style="margin-top: 110px">个人信息</h1>
+
+    <div style="margin-left: 200px;margin-top:0px;float: left">
+    <div style="float: left">
+        {% if ds %}
+        <div><img src="data:image/png;base64,{{ base64.b64encode(ds.picture).decode('utf-8')}}" width="100" height="100"/></div>
+        <div><button  id="change_image" style="" class="btn btn-warning">更换头像</button></div>
+        {% else %}
+        <div><button  id="change_image" style="" class="btn btn-success">上传头像</button></div>
+    {% endif %}
+    <div id="image" style="display: none;margin-left: -50px" >
+        <form  method="post" name="" enctype="multipart/form-data" action="/user/edit2" id="1" >
+            {{form.hidden_tag()}}
+            {{ form.file(required="required",class_="",style="width:120px") }}
+            {{ form.submit(class_="btn btn-danger") }}
+            <button id="nonono" class="btn btn-primary" >取消</button>
+        </form>
+    </div>
+    </div>
+<div style="float: left">
+    <form method="post" style="display: inline-block;float: right;width: 700px;margin-left:300px;margin-top: 60px" action="/user/edit1" id="2">
+        <p class="form-group">
+            <label for="name" style="width: 15%">姓 名：</label>
+            <span id="name">{{ user.name }}</span>
+        </p>
+        <p class="form-group">
+            <label for="_id" style="width: 15%">学 号：</label>
+            <span id="_id">{{user.username}}</span>
+        </p>
+        <p class="form-group">
+            <div style="display: inline-block;width: 15%;max-width: 100%;margin-bottom: 5px;font-weight: 700">密 码：</div>
+            <div id="password" style="display: inline-block;width: 46%">
+                <input type="text" id="password-input" name="name" style='display: none' value="{{ user.password }}" class="form-control">
+                <span class="form-control-static" id='password-p' style='display: block;'>{{ user.password }}</span>
+            </div>
+            <div style="float: right;display: inline-block;width: 30%">
+                <button id='password-modify' type="button" onclick='clickModify(this)' class="btn btn-warning">修改</button>
+                <span align="left">
+                        <button id='password-sure' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-danger">确定</button>
+                    </span>
+                <span align="right"><button id='password-cancel' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-primary">取消</button></span>
+            </div>
+        </p>
+        <p class="form-group">
+        <div style="display: inline-block;width: 15%;max-width: 100%;margin-bottom: 5px;font-weight: 700;">手机号码：</div>
+        <div id="tel" style="display: inline-block;width: 50%">
+            <input type="text" id="telephone-input" name="name" style='display: none' value="{{ user.telephone }}" class="form-control">
+            <div class="form-control-static" id='telephone-p' style='display: block'>{{ user.telephone }}</div>
+        </div>
+        <div style="float: right;display: inline-block;width: 30%">
+            <button id='telephone-modify' type="button" onclick='clickModify(this)' class="btn btn-warning" >修改</button>
+            <span align="left">
+                        <button id='telephone-sure' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-danger">确定</button>
+                    </span>
+            <span align="right">
+                    <button id='telephone-cancel' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-primary">取消</button>
+                </span>
+        </div>
+        </p>
+        <p class="form-group">
+            <label for="sex" style="width: 15%">性 别：</label>
+            <span id="sex">{{ user.gender }}</span>
+        </p>
+        <p class="form-group">
+        <div style="display: inline-block;width: 15%;max-width: 100%;margin-bottom: 5px;font-weight: 700;">年 龄：</div>
+            <div id="age" style="display: inline-block;width: 50%">
+            <input type="text" id="age-input" name="name" style='display: none' value="{{ user.age }}" class="form-control">
+            <p class="form-control-static" id='age-p' style='display: block'>{{ user.age }}</p>
+        </div>
+            <div style="float: right;display: inline-block;width: 30%">
+            <button id='age-modify' type="button" onclick='clickModify(this)' class="btn btn-warning" >修改</button>
+            <span align="left">
+                        <button id='age-sure' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-danger">确定</button>
+                    </span>
+            <span align="right">
+                    <button id='age-cancel' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-primary">取消</button>
+                </span>
+        </div>
+        </p>
+        <p class="form-group">
+        <div style="display: inline-block;width: 15%;max-width: 100%;margin-bottom: 5px;font-weight: 700;">籍 贯：  </div>
+        <div id="address" style="display: inline-block;width: 50%">
+            <input type="text" id="address-input" name="username" style='display: none' value="{{ user.address }}" class="form-control">
+            <p class="form-control-static" id='address-p' style='display: block'>{{ user.address }}</p>
+        </div>
+        <div style="float: right;display: inline-block;width: 30%">
+            <button id='address-modify' type="button" onclick='clickModify(this)' class="btn btn-warning" >修改</button>
+            <span align="left">
+                        <button id='address-sure' style='display: none' onclick='clickSure(this)' type="button" class="btn btn-danger">确定</button>
+                    </span>
+            <span align="right">
+                    <button id='address-cancel' style='display: none' onclick='clickCancel(this)' type="button" class="btn btn-primary">取消</button>
+                </span>
+        </div>
+        </p>
+
+
+
+    </form>
+    </div>
+    </div>
+    </div>
+
+{#<!--footer-->#}
+<footer style="background: black;height: 50px" class="navbar-fixed-bottom">
+    </footer>
+<script type="text/javascript">
+    function ProcessFile(e) {
+        var file = document.getElementById('file').files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var txt = event.target.result;
+                var img = document.createElement("img");
+                img.src = txt;//将图片base64字符串赋值给img的src
+                img.width=100;
+                img.height=100;
+// console.log(txt);
+                document.getElementById("result").appendChild(img);
+                };
+                }
+        reader.readAsDataURL(file);
+    }
+
+    function contentLoaded() {
+        document.getElementById('file').addEventListener('change', ProcessFile, false);
+}
+
+    window.addEventListener("DOMContentLoaded", contentLoaded, false);
+</script>
+<script>
+    $(document).ready(function(){
+        $("#change_image").click(function(){
+        $("#image").show();
+  });
+
+});
+    $(document).ready(function(){
+        $("#nonono").click(function(){
+        $("#image").hide();
+  });
+
+});
+</script>
+<script>
+     function temperature() {
+        var now = new Date();
+
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var time=year+'-'+month+'-'+day+' '+'00:00:00'
+        window.location.href = '/date/'+time
+
+    }
+</script>
+</body>
+</html>

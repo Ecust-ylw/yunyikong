@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" href="{{ url_for('static',filename='css/common.css') }}" rel="stylesheet" charset="UTF-8">
+    <title>设备管理</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="../../static/css/font-awesome-4.7.0/css/font-awesome.css">
+    <style>
+        .modal-backdrop{
+            z-index:0;
+        }
+        .container{
+            width: 100%;
+            padding: 0;
+        }
+        .amap-icon img,
+        .amap-marker-content img{
+            width: 45px;
+            height: 45px;
+        }
+    </style>
+    <style>
+        .hide{
+            display: none;
+        }
+        .c1{
+            position: fixed;
+            top:0;
+            bottom: 0;
+            left:0;
+            right: 0;
+            background: rgba(0,0,0,.5);
+            z-index: 2;
+        }
+        .c2{
+            background-color: white;
+            position: fixed;
+            width: 500px;
+            height: 630px;
+            top:36%;
+            left: 50%;
+            z-index: 3;
+            margin-top: -200px;
+            margin-left: -200px;
+        }
+		#modal1 p {
+			margin-left:80px;
+            margin-top: 10px;
+		}
+        #modal2 p {
+			margin-left:80px;
+            margin-top: 10px;
+		}
+    </style>
+    <script>
+        //点击添加设备后弹窗
+        function add() {
+            document.getElementById('shade').classList.remove('hide');
+            document.getElementById('modal1').classList.remove('hide');
+        }
+        //添加设备弹窗关闭
+        function Hide1(){
+        document.getElementById('shade').classList.add('hide');
+        document.getElementById('modal1').classList.add('hide');
+        }
+        //修改设备弹窗关闭
+        function Hide2(){
+        document.getElementById('shade').classList.add('hide');
+        document.getElementById('modal2').classList.add('hide');
+        }
+        //点击修改后弹窗
+        function edit(e) {
+            let id = e.id
+
+            $.ajax({
+                'url': '/equipment/edit/'+id,
+                'data': {
+                },
+                'type' :'get',
+                'dataType':'json',
+                'success': function (data) {
+                    console.log(data)
+                    document.getElementById('shade').classList.remove('hide');
+                    document.getElementById('modal2').classList.remove('hide');
+                    document.getElementById('location1').value=data.location
+                    var select = document.getElementById('status1');
+                    for (var i = 0; i < select.options.length; i++){
+                      if (select.options[i].value == data.status){
+                         select.options[i].selected = true;
+                         break;
+                          }
+                       }
+                    document.getElementById('gaode_longitude1').value=data.gaode_longitude
+                    document.getElementById('gaode_latitude1').value=data.gaode_latitude
+                    document.getElementById('eid').value=data.id
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+        }
+        //修改设备
+        function submit2() {
+            var location = $('input[name="location1"]').val();
+            var status = $("#status1 option:selected").val();
+            var gaode_longitude = $("input[name='gaode_longitude1']").val();
+            var gaode_latitude = $("input[name='gaode_latitude1']").val();
+            var eid = $("input[name='eid']").val();
+            console.log(gaode_longitude,gaode_latitude)
+            $.ajax({
+                'url': '/equipment/edit/'+eid,
+                'data': {
+                    'location': location,
+                    'status':status,
+                    'gaode_latitude':gaode_latitude,
+                    'gaode_longitude': gaode_longitude,
+                },
+                'type' :'post',
+                'dataType':'json',
+                'success': function (data) {
+                    if (data['msg'] == 'success') {
+                        alert('修改成功')
+                        window.location.href = '/equipment/show'
+                    } else {
+                        console.log(data)
+                        var error = data['error'];
+                        alert(error)
+                    }
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+
+        }
+        //添加设备
+        function submit1() {
+            var location = $('input[name="location"]').val();
+            var status = $("#status option:selected").val();
+            var gaode_longitude = $("input[name='gaode_longitude']").val();
+            var gaode_latitude = $("input[name='gaode_latitude']").val();
+            var admin = $("input[name='admin']").val();
+
+            $.ajax({
+                'url': '/equipment/add',
+                'data': {
+                    'location': location,
+                    'status':status,
+                    'gaode_latitude':gaode_latitude,
+                    'gaode_longitude': gaode_longitude,
+                    'admin': admin
+                },
+                'type' :'post',
+                'dataType':'json',
+                'success': function (data) {
+                    if (data['msg'] == 'success') {
+                        alert('添加成功')
+                        //document.getElementById('shade').classList.add('hide');
+                        //document.getElementById('modal1').classList.add('hide');
+                        window.location.href = '/equipment/show'
+                    } else {
+                        console.log(data)
+                        var error = data['error'];
+                        alert(error)
+                    }
+                },
+                'fail': function (error) {
+                    console.log(error)
+                }
+            });
+
+        }
+    </script>
+</head>
+<body>
+<!--nav-->
+<nav class="nav nav-tabs navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">云疫平台--管理端</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('index.index_page') }}">首页 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="{{ url_for('equipment.equipment_show') }}">设备管理 <span class="sr-only">(current)</span></a></li>
+                <li><a href="{{ url_for('monitor.person_status') }}">人员管理 <span class="sr-only">(current)</span></a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="btn-group">
+                    <a title="消息" class="fa fa-bell" data-toggle="dropdown">
+                        <label class="label label-danger" style="right: 0px">{{count}}</label>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        {% for alarm in alarms %}
+                        <li><a href="/equipment/detail/{{ alarm.equipment_id }}">{{ alarm.equipment.location }}---{{ alarm.reason }}-----{{ alarm.alarm_time }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.name}}({{ user.username }}) <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('user.edit_information') }}">个人信息</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ url_for('user.logout') }}">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<!--组件-->
+<div id="component" style="margin-top: 50px">
+
+    <!--设备管理-->
+    <div class="container" style="padding-bottom: 40px;background: #fcf8e3" id="manage">
+        <table class="table table-bordered table-hover" style="margin-top: 40px">
+            <caption class="h2 text-center">设备管理</caption>
+            <button class="btn btn-success" style="float: right;margin-right: 10%;margin-top: 2%" onclick="add()">添加设备 </button>
+            <thead>
+            <tr class="text-info">
+                <th class="text-center">序号</th>
+                <th class="text-center">地点</th>
+                <th class="text-center">状态</th>
+                <th class="text-center">经度</th>
+                <th class="text-center">纬度</th>
+                <th class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for e in equipments %}
+            <tr class="text-center" v-for="item in myData">
+                <td>{{loop.index}}</td>
+                <td>{{e.location}}</td>
+                <td>{{e.status}}</td>
+                <td>{{e.gaode_longitude}}</td>
+                <td>{{e.gaode_latitude}}</td>
+                <td>
+                    <a class="btn btn-info btn-sm"  href="{{ url_for('equipment.equipment_detail',eid = e.id) }}">详情</a>
+                    <a class="btn btn-warning btn-sm" id="{{ e.id }}" onclick="edit(this)">修改</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div id="shade" class="c1 hide"></div>
+<div id="modal1" class="c2 hide" >
+    <div style="width: 500px;margin: 0 auto;">
+        <form style="margin-top: 50px">
+            <h3 style="text-align: center">添加设备</h3>
+            <div style="width: 90%;margin-right: 5%">
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="admin" class="col-sm-3 control-label">管理人员：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="admin" name="admin" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="location" class="col-sm-3 control-label">地点：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="location" name="location" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="status" class="col-sm-3 control-label">状态：</label>
+                    <div class="col-sm-9">
+{#                        <input type="text" id="status" name="status" class="form-control">#}
+                        <select name="status" id="status" style="width: 200px" class="form-control">
+                            <option value="正常">正常</option>
+                            <option value="故障">故障</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="gaode_longitude" class="col-sm-3 control-label">经度：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="gaode_longitude" name="gaode_longitude" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group" style="margin-top: 20px">
+                    <label for="gaode_latitude" class="col-sm-3 control-label">纬度：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="gaode_latitude" name="gaode_latitude" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div id='amap' style="height: 200px;width: 400px;margin-left: 10%;margin-top: 10%"></div>
+            <p style="margin-left: 40%;margin-top: 20px;float: right;margin-right: 10%" >
+                <input type="button" value="确定" onclick="submit1()" class="btn btn-success">
+                <input type="button" value="取消" onclick="Hide1();" class="btn btn-primary">
+            </p>
+
+        </form>
+    </div>
+</div>
+<div id="modal2" class="c2 hide" >
+    <form  style="margin-top: 50px">
+        <h3 style="text-align: center">修改设备</h3>
+        <div style="width: 90%;margin-right: 5%">
+            <div class="form-group" style="margin-top: 20px">
+                <label for="location1" class="col-sm-3 control-label">地点：</label>
+                <div class="col-sm-9">
+                    <input type="text" id="location1" name="location1" class="form-control">
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group" style="margin-top: 20px">
+                <label for="status1" class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-9">
+{#                    <input type="text" id="status1" name="status1" class="form-control">#}
+                    <select name="status1" id="status1" style="width: 200px" class="form-control">
+                            <option value="正常">正常</option>
+                            <option value="故障">故障</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group" style="margin-top: 20px">
+                <label for="gaode_longitude1" class="col-sm-3 control-label">经度：</label>
+                <div class="col-sm-9">
+                    <input type="text" id="gaode_longitude1" name="gaode_longitude1" class="form-control">
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group" style="margin-top: 20px">
+                <label for="gaode_latitude1" class="col-sm-3 control-label">纬度：</label>
+                <div class="col-sm-9">
+                    <input type="text" id="gaode_latitude1" name="gaode_latitude1" class="form-control">
+                </div>
+            </div>
+        </div>
+        <p><input type="hidden" id="eid" name="eid"></p>
+        <div id='bmap' style="height: 200px;width: 400px;margin-left: 10%"></div>
+        <p style="margin-left: 40%;margin-top: 20px;float: right;margin-right: 10%" >
+            <input type="button" value="确定" onclick="submit2()" class="btn btn-success">
+            <input type="button" value="取消" onclick="Hide2();" class="btn btn-primary">
+        </p>
+
+    </form>
+
+</div>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=d7a10b3c8c098972fca3e226b275fb15"></script>
+
+<script type="text/javascript">
+    var amap = new AMap.Map('amap',{
+        zoom: 15,  //设置地图显示的缩放级别
+        center: [112.720752,37.750125],//设置地图中心点坐标
+        lang:'zh_cn',  //设置地图语言类型
+    });
+
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = amap.on('click', function(e) {
+        document.getElementById("gaode_latitude").value =  e.lnglat.getLat();
+        document.getElementById("gaode_longitude").value = e.lnglat.getLng();
+
+        if (marker) {
+            marker.setMap(null);
+            marker = null;
+        }
+        addMarker1(e.lnglat.getLng(),e.lnglat.getLat());
+    });
+
+
+    var marker;
+    // 实例化点标记
+    function addMarker1(lng,lat) {
+        marker = new AMap.Marker({
+            icon: "/static/img/mapPoint/blue.png",
+            position: [lng, lat]
+        });
+        marker.setMap(amap);
+    }
+    var positions = [
+             {% for e in equip %}
+            [
+                { 'lng': {{ e.longitude }},  // 经度
+                  'lnt': {{ e.latitude }},    // 维度
+                  'state': '{{ e.status }}',   // 状态，根据状态调图片
+                }
+            ],
+            {% endfor %}
+        ]
+    // 标注列表
+    var markers = [];
+    var pictures =  {'正常':'/static/img/mapPoint/blue.png', '故障':'/static/img/mapPoint/yellow.png', '101':'/static/img/mapPoint/red.png'};  // 标点图片
+    if (positions.length) {
+       for(var i=0; i < positions.length; i += 1){
+           var marker1 = new AMap.Marker({
+                  // 经纬度
+                  position:[positions[i][0]['lng'], positions[i][0]['lnt']],
+                  // 图片
+                  icon: pictures[positions[i][0]['state']],
+                  // 偏移量
+                  offset: new AMap.Pixel(-22.5,-45),
+                  // 设置是否可拖拽
+                  draggable: false,
+
+            });
+
+            markers.push(marker1);
+
+        }
+
+        amap.add(markers);
+
+    }
+
+    var a = amap.setFitView();
+    if (a){
+        console.log(a)
+    }
+
+
+</script>
+<script type="text/javascript">
+    var bmap = new AMap.Map('bmap',{
+        zoom: 15,  //设置地图显示的缩放级别
+        center: [112.720752,37.750125],//设置地图中心点坐标
+        lang:'zh_cn',  //设置地图语言类型
+    });
+
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    var clickEventListener = bmap.on('click', function(e) {
+        document.getElementById("gaode_latitude1").value =  e.lnglat.getLat();
+        document.getElementById("gaode_longitude1").value = e.lnglat.getLng();
+
+        if (marker) {
+            marker.setMap(null);
+            marker = null;
+        }
+        addMarker(e.lnglat.getLng(),e.lnglat.getLat());
+    });
+
+    
+    var marker;
+    // 实例化点标记
+    function addMarker(lng,lat) {
+        marker = new AMap.Marker({
+            icon: '/static/img/mapPoint/blue.png',
+            position: [lng, lat]
+        });
+        marker.setMap(bmap);
+    }
+
+
+</script>
+<footer style="background: black;height: 50px" class="navbar-fixed-bottom">
+</footer>
+</body>
+</html>
