@@ -3,7 +3,6 @@ import config
 from models import User, Admin_people
 from db import db
 
-# from apps.manage.urls import manage
 from apps.user.urls import user
 from apps.monitor.urls import monitor
 from apps.equipment.urls import equipment
@@ -15,7 +14,6 @@ app = Flask(__name__)
 app.config.from_object(config)
 db.init_app(app)
 
-# app.register_blueprint(manage, url_prefix='/manage')
 app.register_blueprint(user, url_prefix='/user')
 app.register_blueprint(monitor, url_prefix='/monitor')
 app.register_blueprint(equipment, url_prefix='/equipment')
@@ -39,4 +37,4 @@ def my_context_processor():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

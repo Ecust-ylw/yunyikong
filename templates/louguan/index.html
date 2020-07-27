@@ -581,7 +581,30 @@ function doHandleMonth(month) {
         map.add(markers);
 
     }
+    var contextMenu = new AMap.ContextMenu();
 
+        //右键放大
+        contextMenu.addItem("放大一级", function () {
+            map.zoomIn();
+        }, 0);
+
+        //右键缩小
+        contextMenu.addItem("缩小一级", function () {
+            map.zoomOut();
+        }, 1);
+
+        //右键显示全国范围
+        contextMenu.addItem("缩放至全国范围", function (e) {
+            map.setZoomAndCenter(4, [108.946609, 34.262324]);
+        }, 2);
+
+        //地图绑定鼠标右击事件——弹出右键菜单
+        map.on('rightclick', function (e) {
+            contextMenu.open(map, e.lnglat);
+            contextMenuPositon = e.lnglat;
+        });
+        var lnglat = new AMap.LngLat(116.397, 39.918);
+        contextMenu.open(map, lnglat);
     map.setFitView();
     </script>
 <script>

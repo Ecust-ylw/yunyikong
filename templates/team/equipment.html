@@ -287,7 +287,6 @@
                 <div class="form-group" style="margin-top: 20px">
                     <label for="status" class="col-sm-3 control-label">状态：</label>
                     <div class="col-sm-9">
-{#                        <input type="text" id="status" name="status" class="form-control">#}
                         <select name="status" id="status" style="width: 200px" class="form-control">
                             <option value="正常">正常</option>
                             <option value="故障">故障</option>
@@ -299,19 +298,19 @@
                 <div class="form-group" style="margin-top: 20px">
                     <label for="gaode_longitude" class="col-sm-3 control-label">经度：</label>
                     <div class="col-sm-9">
-                        <input type="text" id="gaode_longitude" name="gaode_longitude" class="form-control">
+                        <input type="text" id="gaode_longitude" name="gaode_longitude" disabled="disabled"class="form-control">
                     </div>
                 </div>
                 <br>
                 <br>
-                <div class="form-group" style="margin-top: 20px">
+                <div class="form-group" style="margin-top: 20px;margin-bottom: 20px">
                     <label for="gaode_latitude" class="col-sm-3 control-label">纬度：</label>
                     <div class="col-sm-9">
-                        <input type="text" id="gaode_latitude" name="gaode_latitude" class="form-control">
+                        <input type="text" id="gaode_latitude" name="gaode_latitude" disabled="disabled" class="form-control">
                     </div>
                 </div>
             </div>
-            <div id='amap' style="height: 200px;width: 400px;margin-left: 10%;margin-top: 10%"></div>
+            <div id='amap' style="height: 200px;width: 308px;margin-left: 25%;margin-top: 10px;"></div>
             <p style="margin-left: 40%;margin-top: 20px;float: right;margin-right: 10%" >
                 <input type="button" value="确定" onclick="submit1()" class="btn btn-success">
                 <input type="button" value="取消" onclick="Hide1();" class="btn btn-primary">
@@ -347,7 +346,7 @@
             <div class="form-group" style="margin-top: 20px">
                 <label for="gaode_longitude1" class="col-sm-3 control-label">经度：</label>
                 <div class="col-sm-9">
-                    <input type="text" id="gaode_longitude1" name="gaode_longitude1" class="form-control">
+                    <input type="text" id="gaode_longitude1" name="gaode_longitude1" disabled="disabled" class="form-control">
                 </div>
             </div>
             <br>
@@ -355,12 +354,12 @@
             <div class="form-group" style="margin-top: 20px">
                 <label for="gaode_latitude1" class="col-sm-3 control-label">纬度：</label>
                 <div class="col-sm-9">
-                    <input type="text" id="gaode_latitude1" name="gaode_latitude1" class="form-control">
+                    <input type="text" id="gaode_latitude1" name="gaode_latitude1" disabled="disabled" class="form-control">
                 </div>
             </div>
         </div>
         <p><input type="hidden" id="eid" name="eid"></p>
-        <div id='bmap' style="height: 200px;width: 400px;margin-left: 10%"></div>
+        <div id='bmap' style="height: 200px;width: 308px;margin-left: 25%"></div>
         <p style="margin-left: 40%;margin-top: 20px;float: right;margin-right: 10%" >
             <input type="button" value="确定" onclick="submit2()" class="btn btn-success">
             <input type="button" value="取消" onclick="Hide2();" class="btn btn-primary">
@@ -373,8 +372,8 @@
 
 <script type="text/javascript">
     var amap = new AMap.Map('amap',{
-        zoom: 15,  //设置地图显示的缩放级别
-        center: [112.720752,37.750125],//设置地图中心点坐标
+        zoom: 4,  //设置地图显示的缩放级别
+        center: [108.946609, 34.262324],//设置地图中心点坐标
         lang:'zh_cn',  //设置地图语言类型
     });
 
@@ -396,9 +395,11 @@
     function addMarker1(lng,lat) {
         marker = new AMap.Marker({
             icon: "/static/img/mapPoint/blue.png",
+            offset: new AMap.Pixel(-22.5,-45),
             position: [lng, lat]
         });
         marker.setMap(amap);
+        amap.setFitView();
     }
     var positions = [
              {% for e in equip %}
@@ -424,21 +425,20 @@
                   offset: new AMap.Pixel(-22.5,-45),
                   // 设置是否可拖拽
                   draggable: false,
-
             });
 
             markers.push(marker1);
 
         }
-
         amap.add(markers);
-
     }
-
-    var a = amap.setFitView();
-    if (a){
+    var b = amap.setFitView();
+    console.log(b)
+    amap.on('complete', function(){
+        // 地图图块加载完成后触发
+        var a = amap.setFitView();
         console.log(a)
-    }
+    })
 
 
 </script>
@@ -467,6 +467,7 @@
     function addMarker(lng,lat) {
         marker = new AMap.Marker({
             icon: '/static/img/mapPoint/blue.png',
+            offset: new AMap.Pixel(-22.5,-45),
             position: [lng, lat]
         });
         marker.setMap(bmap);

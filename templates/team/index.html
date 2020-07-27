@@ -519,12 +519,17 @@ function doHandleMonth(month) {
             //  地图对象
 	var map = new AMap.Map('vmap',
 			{
+			    {#viewMode:'3D',#}
+                {#pitch:45,#}
 				// // 缩放度
 				{#zoom:15,#}
                 {#center: [112.720752,37.750125],#}
 			}
 	);
-
+	{#var satelliteLayer = new AMap.TileLayer.Satellite();#}
+    {#var roadNetLayer =  new AMap.TileLayer.RoadNet();#}
+    {#map.add(satelliteLayer);#}
+    {#map.add(roadNetLayer);#}
     // 设备列表
 	var positions = [
              {% for e in equipments %}
@@ -569,7 +574,7 @@ function doHandleMonth(month) {
             marker.content = positions[i][0]['content'][0]+positions[i][0]['content'][1]
            //给点标记的点击事件绑定函数
             marker.on('click', markerClick);
-
+             {#marker.setAnimation('AMAP_ANIMATION_BOUNCE');#}
             markers.push(marker);
 
 
@@ -578,11 +583,36 @@ function doHandleMonth(month) {
         map.add(markers);
 
     }
+    var contextMenu = new AMap.ContextMenu();
 
-    var a = map.setFitView();
-    if (a){
+        //右键放大
+        contextMenu.addItem("放大一级", function () {
+            map.zoomIn();
+        }, 0);
+
+        //右键缩小
+        contextMenu.addItem("缩小一级", function () {
+            map.zoomOut();
+        }, 1);
+
+        //右键显示全国范围
+        contextMenu.addItem("缩放至全国范围", function (e) {
+            map.setZoomAndCenter(4, [108.946609, 34.262324]);
+        }, 2);
+
+        //地图绑定鼠标右击事件——弹出右键菜单
+        map.on('rightclick', function (e) {
+            contextMenu.open(map, e.lnglat);
+            contextMenuPositon = e.lnglat;
+        });
+        var lnglat = new AMap.LngLat(116.397, 39.918);
+        contextMenu.open(map, lnglat);
+        map.on('complete', function(){
+            // 地图图块加载完成后触发
+
+        });
+        var a = map.setFitView();
         console.log(a)
-    }
     </script>
 </body>
 </html>

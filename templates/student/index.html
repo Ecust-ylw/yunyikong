@@ -131,6 +131,14 @@
             width: 45px;
             height: 45px;
         }
+         .input-card .btn{
+            margin-right: 1.2rem;
+            width: 9rem;
+        }
+
+        .input-card .btn:last-child{
+            margin-right: 0;
+        }
     </style>
 
     <!-- 三级联动 end -->
@@ -506,10 +514,6 @@ function doHandleMonth(month) {
     for(let i=14;i>0;i--){
         twoWeeksDays.push(getDay(-i))
     }
-
-
-
-
     var myChart=echarts.init(document.getElementById('chart2'));
         //指定图表的配置项和数/ /
     var option={
@@ -563,70 +567,146 @@ function doHandleMonth(month) {
     </script>
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=d7a10b3c8c098972fca3e226b275fb15"></script>
     <script>
-            //  地图对象
-	var map = new AMap.Map('vmap',
-			{
-				// // 缩放度
-				zoom:12,
-                center: [112.720752,37.750125],
-			}
-	);
-
-    // 设备列表
-	var positions = [
-             {% for e in equipments %}
-            [
-                { 'lng': {{ e.longitude }},  // 经度
-                  'lnt': {{ e.latitude }},    // 维度
-                  'state': '{{ e.status }}',   // 状态，根据状态调图片
-                  'name':'{{ e.location }}',
-                  'alarm_num': {{ e.alarm_num }},
-                  'content':[],
+        //  地图对象
+        var map = new AMap.Map('vmap',
+                {
+                    // // 缩放度
+                    zoom:12,
+                    center: [112.720752,37.750125],
                 }
-            ],
-            {% endfor %}
-        ]
-    // 标注列表
-    var markers = [];
-    var pictures =  {'正常':'/static/img/mapPoint/blue.png', '故障':'/static/img/mapPoint/yellow.png', '101':'/static/img/mapPoint/red.png'};  // 标点图片
-    var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -25)});
-    // 点击函数
-    function markerClick(e) {
-            infoWindow.setContent(e.target.content);
-            infoWindow.open(map, e.target.getPosition());
+        );
+
+        // 设备列表
+        var positions = [
+                 {% for e in equipments %}
+                [
+                    { 'lng': {{ e.longitude }},  // 经度
+                      'lnt': {{ e.latitude }},    // 维度
+                      'state': '{{ e.status }}',   // 状态，根据状态调图片
+                      'name':'{{ e.location }}',
+                      'alarm_num': {{ e.alarm_num }},
+                      'content':[],
+                    }
+                ],
+                {% endfor %}
+            ]
+        {#var  marker1, lineArr = [#}
+        {#         {% for e in equipments %}#}
+        {#        [#}
+        {#            {{ e.longitude }},  // 经度#}
+        {#            {{ e.latitude }},    // 维度#}
+        {#        ],#}
+        {#        {% endfor %}#}
+        {#    ];#}
+        {#marker1 = new AMap.Marker({#}
+        {#    map: map,#}
+        {#    position: lineArr[0],#}
+        {#    icon: "https://webapi.amap.com/images/car.png",#}
+        {#    offset: new AMap.Pixel(-26, -13),#}
+        {#    autoRotation: true,#}
+        {#    angle:180,#}
+        {#});#}
+        {# var polyline = new AMap.Polyline({#}
+        {#    map: map,#}
+        {#    path: lineArr,#}
+        {#    showDir:true,#}
+        {#    strokeColor: "#28F",  //线颜色#}
+        {#    // strokeOpacity: 1,     //线透明度#}
+        {#    strokeWeight: 6,      //线宽#}
+        {#    // strokeStyle: "solid"  //线样式#}
+        {#});#}
+        {##}
+        {#var passedPolyline = new AMap.Polyline({#}
+        {#    map: map,#}
+        {#    // path: lineArr,#}
+        {#    strokeColor: "#AF5",  //线颜色#}
+        {#    // strokeOpacity: 1,     //线透明度#}
+        {#    strokeWeight: 6,      //线宽#}
+        {#    // strokeStyle: "solid"  //线样式#}
+        {#});#}
+        {# marker1.on('moving', function (e) {#}
+        {#    passedPolyline.setPath(e.passedPath);#}
+        {#});#}
+        {#    function startAnimation () {#}
+        {#        marker1.moveAlong(lineArr, 200);#}
+        {#    }#}
+        {##}
+        {#    function pauseAnimation () {#}
+        {#        marker1.pauseMove();#}
+        {#    }#}
+        {##}
+        {#    function resumeAnimation () {#}
+        {#        marker1.resumeMove();#}
+        {#    }#}
+        {##}
+        {#    function stopAnimation () {#}
+        {#        marker1.stopMove();#}
+        {#    }#}
+        // 标注列表
+        var markers = [];
+        var pictures =  {'正常':'/static/img/mapPoint/blue.png', '故障':'/static/img/mapPoint/yellow.png', '101':'/static/img/mapPoint/red.png'};  // 标点图片
+        var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -25)});
+        // 点击函数
+        function markerClick(e) {
+                infoWindow.setContent(e.target.content);
+                infoWindow.open(map, e.target.getPosition());
+            }
+        if (positions.length) {
+           for(var i=0; i < positions.length; i += 1){
+               var marker = new AMap.Marker({
+                          // 经纬度
+                      position:[positions[i][0]['lng'], positions[i][0]['lnt']],
+                      // 图片
+                      icon: pictures[positions[i][0]['state']],
+                      // 偏移量
+                      offset: new AMap.Pixel(-22.5,-45),
+                      // 设置是否可拖拽
+                      draggable: false,
+
+                });
+                //　将点标记的信息录入对象中
+                positions[i][0]['content'][0] = "<dt>设备地点: "+positions[i][0]['name']+"</dt>"
+                positions[i][0]['content'][1] = "<dt>今日通行人次: "+positions[i][0]['alarm_num']+"</dt>"
+                // 给点标记增加点击功能
+                //把每个点的信息赋给点的content属性
+                marker.content = positions[i][0]['content'][0]+positions[i][0]['content'][1]
+               //给点标记的点击事件绑定函数
+                marker.on('click', markerClick);
+                {#marker.setAnimation('AMAP_ANIMATION_BOUNCE');#}
+                markers.push(marker);
+                positions[i].push(marker)
+
+            }
+
+            map.add(markers);
+
         }
-    if (positions.length) {
-       for(var i=0; i < positions.length; i += 1){
-           var marker = new AMap.Marker({
-                      // 经纬度
-                  position:[positions[i][0]['lng'], positions[i][0]['lnt']],
-                  // 图片
-                  icon: pictures[positions[i][0]['state']],
-                  // 偏移量
-                  offset: new AMap.Pixel(-22.5,-45),
-                  // 设置是否可拖拽
-                  draggable: false,
+            //创建右键菜单
+        var contextMenu = new AMap.ContextMenu();
 
-            });
-            //　将点标记的信息录入对象中
-            positions[i][0]['content'][0] = "<dt>设备地点: "+positions[i][0]['name']+"</dt>"
-            positions[i][0]['content'][1] = "<dt>今日通行人次: "+positions[i][0]['alarm_num']+"</dt>"
-            // 给点标记增加点击功能
-            //把每个点的信息赋给点的content属性
-            marker.content = positions[i][0]['content'][0]+positions[i][0]['content'][1]
-           //给点标记的点击事件绑定函数
-            marker.on('click', markerClick);
+        //右键放大
+        contextMenu.addItem("放大一级", function () {
+            map.zoomIn();
+        }, 0);
 
-            markers.push(marker);
-            positions[i].push(marker)
+        //右键缩小
+        contextMenu.addItem("缩小一级", function () {
+            map.zoomOut();
+        }, 1);
 
-        }
+        //右键显示全国范围
+        contextMenu.addItem("缩放至全国范围", function (e) {
+            map.setZoomAndCenter(4, [108.946609, 34.262324]);
+        }, 2);
 
-        map.add(markers);
-
-    }
-
-    map.setFitView();
+        //地图绑定鼠标右击事件——弹出右键菜单
+        map.on('rightclick', function (e) {
+            contextMenu.open(map, e.lnglat);
+            contextMenuPositon = e.lnglat;
+        });
+        var lnglat = new AMap.LngLat(116.397, 39.918);
+        contextMenu.open(map, lnglat);
+        map.setFitView();
     </script>
 <script>
     function temperature() {
